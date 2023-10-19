@@ -17,19 +17,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// get all apartment records 
-Route::match(["get", "post"], "appartement", "App\Http\Controllers\AppartementController@all"); 
-// create apartment 
-Route::post("appartement/create", "App\Http\Controllers\AppartementController@create");
-// update apartment 
-Route::post("appartement/update", "App\Http\Controllers\AppartementController@update"); 
-// delete apartment  
-Route::post("appartement/delete", "App\Http\Controllers\AppartementController@delete");  
-// sum of the field loyer of the apartment  
-Route::match(["get", "post"], "appartement/total", "App\Http\Controllers\AppartementController@total");
-// minimum of the field loyer of the apartment  
-Route::match(["get", "post"], "appartement/minimum", "App\Http\Controllers\AppartementController@minimum");  
-Route::match(["get", "post"], "appartement/min", "App\Http\Controllers\AppartementController@minimum");  
-// maximum of the field loyer of the apartment  
-Route::match(["get", "post"], "appartement/maximum", "App\Http\Controllers\AppartementController@maximum");  
-Route::match(["get", "post"], "appartement/max", "App\Http\Controllers\AppartementController@maximum");    
+/* item routes */ 
+Route::get("api/matiere", "App\Http\Controllers\MatiereController@readAll");
+Route::post("api/matiere/search", "App\Http\Controllers\MatiereController@search");  
+Route::post("api/matiere/create", "App\Http\Controllers\MatiereController@create"); 
+Route::delete("api/matiere/delete", "App\Http\Controllers\MatiereController@delete"); 
+Route::match(["put", "post"],"api/matiere/increase", "App\Http\Controllers\MatiereController@increaseQuantity"); 
+Route::match(["put", "post"],"api/matiere/decrease", "App\Http\Controllers\MatiereController@decreaseQuantity"); 
+
+/* entry's history */ 
+Route::get("api/entree", "App\Http\Controllers\EntreeController@readAll");
+Route::post("api/entree/create", "App\Http\Controllers\EntreeController@create");  
+Route::post("api/entree/search", "App\Http\Controllers\EntreeController@search"); 
+Route::delete("api/entree/delete", "App\Http\Controllers\EntreeController@delete"); 
+
+/* sortie's history */ 
+Route::get("api/sortie", "App\Http\Controllers\SortieController@readAll");
+Route::post("api/sortie/create", "App\Http\Controllers\SortieController@create");  
+Route::post("api/sortie/search", "App\Http\Controllers\SortieController@search"); 
+Route::delete("api/sortie/delete", "App\Http\Controllers\SortieController@delete"); 

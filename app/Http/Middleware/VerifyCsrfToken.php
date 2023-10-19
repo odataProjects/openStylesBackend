@@ -12,14 +12,21 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
-        "appartement/create", 
-        "appartement/update", 
-        "appartement/delete", 
-        "appartement/total", 
-        "appartement/minimum", 
-        "appartement/maximum", 
-        "appartement/min", 
-        "appartement/max"
+        // item's routes 
+        "api/matiere/create", 
+        "api/matiere/delete", 
+        "api/matiere/increase", 
+        "api/matiere/decrease", 
+        "api/matiere/search", 
+
+        // entry's routes 
+        "api/entree/create", 
+        "api/entree/delete", 
+        "api/entree/search", 
+
+        // sortie's routes 
+        "api/sortie/create", 
+        "api/sortie/delete", 
+        "api/sortie/search"
     ];
 }
