@@ -23,10 +23,14 @@ class VerifyCsrfToken extends Middleware
         "api/entree/create", 
         "api/entree/delete", 
         "api/entree/search", 
+        "api/entree/search/date", 
+        "api/entree/search/date_keyword", 
 
         // sortie's routes 
         "api/sortie/create", 
         "api/sortie/delete", 
-        "api/sortie/search"
+        "api/sortie/search", 
+        "api/sortie/search/date", 
+        "api/sortie/search/date_keyword", 
     ];
 }

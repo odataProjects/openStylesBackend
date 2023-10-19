@@ -74,4 +74,32 @@ class EntreeController extends Controller
       }
       return $this->errorResponse(); 
     }
+
+    /* search item by date */ 
+    public function searchByDate(Request $request) {
+      $date = $request->input("date", 0); 
+      if($date) {
+        $results = DB::select("SELECT entree.code_entree, matiere.nom, entree.quantite, matiere.unite, entree.date FROM matiere, entree WHERE matiere.code_matiere = entree.code_matiere and entree.date = ?", [$date]); 
+        return $results;
+      }
+      else {
+        return $this->readAll(); 
+      }
+    }
+
+    /* search item by both date and keyword */ 
+    public function searchByDateAndKeyword(Request $request) {
+      $date = $request->input("date", 0); 
+      $keyword = $request->input("keyword", 0); 
+      if($date && $keyword) {
+        $results = DB::select("SELECT entree.code_entree, matiere.nom, entree.quantite, matiere.unite, entree.date FROM matiere, entree WHERE matiere.code_matiere = entree.code_matiere AND entree.date = ? AND matiere.nom LIKE '%" . $keyword . "%'", [$date]); 
+        return $results;
+      }
+      else {
+        if($date)
+          return $this->searchByDate($request); 
+        else 
+          return $this->search($request); 
+      }
+    }
 }
