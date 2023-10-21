@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Matiere;
+use App\Models\Sortie;
 use Illuminate\Support\Facades\DB;
 
 class MatiereController extends Controller
@@ -138,5 +139,17 @@ class MatiereController extends Controller
       return $results; 
     } 
     return $this->errorResponse(); 
+  }
+
+  /* get top 10 most used item */ 
+  public function getMostUsed() {
+    $results = DB::select("SELECT matiere.nom, matiere.unite, sum(sortie.quantite) AS total FROM matiere, sortie WHERE matiere.code_matiere = sortie.code_matiere GROUP BY matiere.code_matiere ORDER BY total DESC LIMIT 10"); 
+    return json_encode($results); 
+  }
+
+  /* get sold out items */ 
+  public function getSoldOut() {
+    $results = DB::select("SELECT * FROM matiere WHERE matiere.quantite = 0"); 
+    return json_encode($results); 
   }
 }
