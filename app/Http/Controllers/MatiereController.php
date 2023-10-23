@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Matiere;
 use App\Models\Sortie;
+use App\Models\Entree;
 use Illuminate\Support\Facades\DB;
 
 class MatiereController extends Controller
@@ -175,5 +176,29 @@ class MatiereController extends Controller
   public function getSoldOut() {
     $results = DB::select("SELECT * FROM matiere WHERE matiere.quantite = 0"); 
     return json_encode($results); 
+  }
+
+  /* get data about a specific item */ 
+  public function getData(Request $request) {
+    $code_matiere = $request->input("code_matiere", 0); 
+
+    /* getting item data */ 
+    if($code_matiere) {
+      $entreeData = DB::select("SELECT sum(entree.quantite) AS total_entree FROM entree WHERE entree.code_matiere = " . $code_matiere . " GROUP BY entree.code_matiere");
+      $outputData = DB::select("SELECT sum(sortie.quantite) AS total_sortie FROM sortie WHERE sortie.code_matiere = " . $code_matiere . " GROUP BY sortie.code_matiere"); 
+      $stockData = DB::select("SELECT quantite FROM MATIERE WHERE code_matiere = " . $code_matiere);
+
+      $total_entree = (count($entreeData) == 0)? 0 : $entreeData[0]->total_entree;
+      $total_sortie = (count($outputData) == 0)? 0 : $outputData[0]->total_sortie; 
+
+      /* returning data */ 
+      return [
+        "status" => "success", 
+        "total_entree" => $total_entree, 
+        "total_sortie" => $total_sortie, 
+        "stock" => $stockData[0]->quantite
+      ]; 
+    }
+    return $this->errorResponse(); 
   }
 }

@@ -18,6 +18,7 @@ class VerifyCsrfToken extends Middleware
         "api/matiere/update", 
         "api/matiere/increase", 
         "api/matiere/decrease", 
+        "api/matiere/data", 
         "api/matiere/search", 
 
         // entry's routes 
