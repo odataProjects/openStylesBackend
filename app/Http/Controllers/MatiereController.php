@@ -81,6 +81,30 @@ class MatiereController extends Controller
     return $this->errorResponse(); 
   }
 
+  /* update the item */ 
+  public function update(Request $request) {
+    $code_matiere = $request->input("code_matiere", 0); 
+    $nom = $request->input("nom", 0); 
+    $unite = $request->input("unite", 0); 
+    $illustration = $request->input("illustration", 0); 
+    $illustrationPath; 
+
+    /* updating data */ 
+    if($code_matiere) {
+      $matiere = Matiere::find($code_matiere); 
+
+      if($nom)
+        $matiere->nom = $nom; 
+      if($unite)
+        $matiere->unite = $unite; 
+      if($illustration)
+        $matiere->illustration = $this->writeIllustrationFile($illustration["filename"], $illustration["data"]);
+      $matiere->save(); 
+      return $this->successResponse(); 
+    }
+    return $this->errorResponse(); 
+  }
+
   /* increase the quantity of the item */ 
   public function decreaseQuantity(Request $request) {
     /* getting request data */

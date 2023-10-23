@@ -39,7 +39,7 @@ class SortieController extends Controller
         - matiere.unite 
         - sortie.date 
       */ 
-      $results = DB::select("SELECT sortie.code_sortie, matiere.nom, sortie.quantite, matiere.unite, sortie.date FROM matiere, sortie WHERE matiere.code_matiere = sortie.code_matiere"); 
+      $results = DB::select("SELECT sortie.code_sortie, matiere.nom, sortie.quantite, matiere.unite, sortie.date FROM matiere, sortie WHERE matiere.code_matiere = sortie.code_matiere ORDER BY sortie.date DESC"); 
       return $results;
     }
 

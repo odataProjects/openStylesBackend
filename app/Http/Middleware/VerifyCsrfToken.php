@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         // item's routes 
         "api/matiere/create", 
         "api/matiere/delete", 
+        "api/matiere/update", 
         "api/matiere/increase", 
         "api/matiere/decrease", 
         "api/matiere/search", 

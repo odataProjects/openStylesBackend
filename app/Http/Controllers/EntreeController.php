@@ -39,7 +39,7 @@ class EntreeController extends Controller
         - matiere.unite 
         - entree.date 
       */ 
-      $results = DB::select("SELECT entree.code_entree, matiere.nom, entree.quantite, matiere.unite, entree.date FROM matiere, entree WHERE matiere.code_matiere = entree.code_matiere"); 
+      $results = DB::select("SELECT entree.code_entree, matiere.nom, entree.quantite, matiere.unite, entree.date FROM matiere, entree WHERE matiere.code_matiere = entree.code_matiere ORDER BY entree.date DESC"); 
       return $results;
     }
 

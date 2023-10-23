@@ -22,6 +22,7 @@ Route::get("api/matiere", "App\Http\Controllers\MatiereController@readAll");
 Route::post("api/matiere/search", "App\Http\Controllers\MatiereController@search");  
 Route::post("api/matiere/create", "App\Http\Controllers\MatiereController@create"); 
 Route::delete("api/matiere/delete", "App\Http\Controllers\MatiereController@delete"); 
+Route::match(["put", "post"],"api/matiere/update", "App\Http\Controllers\MatiereController@update"); 
 Route::match(["put", "post"],"api/matiere/increase", "App\Http\Controllers\MatiereController@increaseQuantity"); 
 Route::match(["put", "post"],"api/matiere/decrease", "App\Http\Controllers\MatiereController@decreaseQuantity"); 
 Route::match(["get", "post"], "api/matiere/most_used", "App\Http\Controllers\MatiereController@getMostUsed"); 
