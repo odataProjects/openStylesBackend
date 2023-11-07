@@ -130,8 +130,14 @@ class MatiereController extends Controller
 
     /* removing the item */ 
     if($code_matiere) { 
+
+      /* delete entry */ 
       $matiere = Matiere::find($code_matiere);  
       $matiere->delete();
+
+      /* delete history */ 
+      DB::delete("DELETE FROM entree WHERE entree.code_matiere = ?", [$code_matiere]); 
+      DB::delete("DELETE FROM sortie WHERE sortie.code_matiere = ?", [$code_matiere]); 
       return $this->successResponse(); 
     }
     return $this->errorResponse(); 

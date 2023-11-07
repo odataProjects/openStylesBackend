@@ -102,4 +102,9 @@ class SortieController extends Controller
           return $this->search($request); 
       }
     }
+
+    /* get the count of entry rows */ 
+    public function getCount() {
+      return DB::select("SELECT count(*) as count FROM sortie")[0]; 
+    }
 }

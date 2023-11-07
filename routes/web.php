@@ -31,8 +31,10 @@ Route::match(["get", "post"], "api/matiere/sold_out", "App\Http\Controllers\Mati
 
 /* entry's history */ 
 Route::get("api/entree", "App\Http\Controllers\EntreeController@readAll");
+Route::get("api/entree/page", "App\Http\Controllers\EntreeController@readPage");
 Route::post("api/entree/create", "App\Http\Controllers\EntreeController@create");  
 Route::post("api/entree/search", "App\Http\Controllers\EntreeController@search"); 
+Route::match(['post', 'get'], "api/entree/count", "App\Http\Controllers\EntreeController@getCount"); 
 Route::post("api/entree/search/date", "App\Http\Controllers\EntreeController@searchByDate"); 
 Route::post("api/entree/search/date_keyword", "App\Http\Controllers\EntreeController@searchByDateAndKeyword"); 
 Route::delete("api/entree/delete", "App\Http\Controllers\EntreeController@delete"); 
@@ -41,6 +43,7 @@ Route::delete("api/entree/delete", "App\Http\Controllers\EntreeController@delete
 Route::get("api/sortie", "App\Http\Controllers\SortieController@readAll");
 Route::post("api/sortie/create", "App\Http\Controllers\SortieController@create");  
 Route::post("api/sortie/search", "App\Http\Controllers\SortieController@search"); 
+Route::match(['post', 'get'], "api/sortie/count", "App\Http\Controllers\SortieController@getCount"); 
 Route::post("api/sortie/search/date", "App\Http\Controllers\SortieController@searchByDate"); 
 Route::post("api/sortie/search/date_keyword", "App\Http\Controllers\SortieController@searchByDateAndKeyword");  
 Route::delete("api/sortie/delete", "App\Http\Controllers\SortieController@delete"); 

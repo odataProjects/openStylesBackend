@@ -25,6 +25,8 @@ class VerifyCsrfToken extends Middleware
         "api/entree/create", 
         "api/entree/delete", 
         "api/entree/search", 
+        "api/entree/count", 
+        "api/entree/readPage", 
         "api/entree/search/date", 
         "api/entree/search/date_keyword", 
 
@@ -32,7 +34,8 @@ class VerifyCsrfToken extends Middleware
         "api/sortie/create", 
         "api/sortie/delete", 
         "api/sortie/search", 
+        "api/sortie/count", 
         "api/sortie/search/date", 
-        "api/sortie/search/date_keyword", 
+        "api/sortie/search/date_keyword"
     ];
 }

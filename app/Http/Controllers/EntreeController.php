@@ -43,6 +43,18 @@ class EntreeController extends Controller
       return $results;
     }
 
+    /* read page of entry data */ 
+    public function readPage(Request $request) {
+      $page = $request->input("page", 0); 
+      $count = $request->input("count", 0); 
+      if(!$page)
+        $page = 1; 
+      if(!$count)
+        $count = 50; 
+      return DB::select("SELECT entree.code_entree, matiere.nom, entree.quantite, matiere.unite, entree.date FROM matiere, entree WHERE matiere.code_matiere = entree.code_matiere ORDER BY entree.date DESC LIMIT ? OFFSET ?", [$count, ($page -1) * $count]); 
+      return $this->errorResponse(); 
+    }
+
     /* search entree data matching the given keyword */ 
     public function search(Request $request) {
       /* the tables columns expected are : 
@@ -101,5 +113,10 @@ class EntreeController extends Controller
         else 
           return $this->search($request); 
       }
+    }
+
+    /* get the count of entry rows */ 
+    public function getCount() {
+      return DB::select("SELECT count(*) as count FROM entree")[0]; 
     }
 }
