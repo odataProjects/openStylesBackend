@@ -1,0 +1,12 @@
+[Unit]
+Description=Your Service Description
+
+[Service]
+ExecStart=/usr/bin/php artisan serve --host 0.0.0.0 --port=510
+User=root
+Group=root
+WorkingDirectory=/home/thyler/odataProjects/openStylesBackend
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,60 @@
+---
+- name: Configure Node.js App
+  hosts: nodejs_servers
+  become: yes
+
+  tasks:
+    - name: Copy files from Jenkins workspace to odataProjects
+      copy:
+        src: /var/lib/jenkins/workspace/openStylesBackend
+        dest: /home/thyler/odataProjects/
+        remote_src: true
+
+    - name: Create service file
+      template:
+        src: "openStylesBackend.j2"
+        dest: "/etc/systemd/system/openStylesBackend.service"
+      notify:
+        - Reload systemd
+        - Restart service
+
+    - name: Start and enable service
+      systemd:
+        name: "openStylesBackend"
+        enabled: yes
+        state: started
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: Check if the database exists
+      mysql_db:
+        name: "laravelOpenStyles"
+        state: present
+      register: database_exists
+
+    - name: Create database if it does not exist
+      when: database_exists.changed
+      mysql_db:
+        name: "laravelOpenStyles"
+        state: present
+
+    - name: Copy .env.server contents to .env
+      copy:
+        src: "/home/thyler/odataProjects/openStylesBackend/.env.server"
+        dest: "/home/thyler/odataProjects/openStylesBackend/.env"
+        remote_src: true
+
+    - name: Run Laravel migrations
+      command: "php /home/thyler/odataProjects/openStylesBackend/artisan migrate"
+      when: database_exists.changed
+
+    - name: Generate Laravel application key
+      command: "php /home/thyler/odataProjects/openStylesBackend/artisan key:generate"
+      when: database_exists.changed
+
+    - name: Restart service
+      systemd:
+        name: "openStylesBackend"
+        state: restarted
