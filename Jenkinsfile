@@ -18,6 +18,8 @@ pipeline {
           //sh 'npm run build'
           sh 'composer install'
 
+          sh 'cp .env.server .env'
+
           sh 'php artisan key:generate'
         }
       }
