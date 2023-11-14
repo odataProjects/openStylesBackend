@@ -18,25 +18,19 @@ pipeline {
                     sh 'cp .env.server .env'
                     sh 'php artisan key:generate'
 
-                    // Stash the files to be copied to the master
-                    stash includes: '**/*', name: 'openStylesBackend'
+                    // Archive the files to be copied to the master
+                    archiveArtifacts '**/*', 'openStylesBackend'
                 }
             }
         }
 
         stage('Copy to Master') {
             steps {
-                // Unstash the files on the master
-                script {
-                    dir('/var/lib/jenkins/workspace/openStylesBackend/') {
-                        unstash 'openStylesBackend'
-
-                        // List the contents of the unstashed directory for debugging
-                        sh 'ls -al'
-                    }
-                }
+                // Copy the artifacts from the build to the master
+                copyArtifacts(projectName: 'openStylesBackend', filter: 'openStylesBackend/**/*', flatten: true)
             }
         }
+
 
         stage('Deploy') {
             steps {
