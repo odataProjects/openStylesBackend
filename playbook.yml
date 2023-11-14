@@ -6,7 +6,7 @@
   tasks:
     - name: Copy files from Jenkins workspace to odataProjects
       copy:
-        src: /home/thyler/agentJobs/workspace/openStylesBackend
+        src: /var/lib/jenkins/workspace/openStylesBackend
         dest: /home/thyler/odataProjects/
         remote_src: true
 
