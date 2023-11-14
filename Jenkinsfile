@@ -1,5 +1,5 @@
 pipeline {
-  agent php-agent
+  agent {php-agent}
 
   stages {
     stage('Git') {
