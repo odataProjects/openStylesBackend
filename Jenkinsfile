@@ -28,18 +28,20 @@ pipeline {
             steps {
                 // Unstash the files on the master
                 script {
-                    unstash 'openStylesBackend'
+                    dir('/var/lib/jenkins/workspace/openStylesBackend/') {
+                        unstash 'openStylesBackend'
 
-                    // Now you can use the copied files on the master as needed
-                    // For example, copy them to a specific directory
-                    sh 'cp -r openStylesBackend/* /var/lib/jenkins/workspace/openStylesBackend/'
+                        // List the contents of the unstashed directory for debugging
+                        sh 'ls -al'
+                    }
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 script {
-                    sh ' ansible-playbook -i  inventory.ini playbook.yml'
+                    sh 'ansible-playbook -i inventory.ini playbook.yml'
                 }
             }
         }
