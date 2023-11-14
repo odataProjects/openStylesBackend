@@ -19,7 +19,7 @@ pipeline {
                     sh 'php artisan key:generate'
 
                     // Archive the files to be copied to the master
-                    archiveArtifacts '**/*', 'openStylesBackend'
+                    archiveArtifacts artifacts: '**/*', fingerprint: true, onlyIfSuccessful: true
                 }
             }
         }
